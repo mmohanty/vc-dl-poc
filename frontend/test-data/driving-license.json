@@ -1,0 +1,14 @@
+{
+  "drivingLicense": {
+    "name": "John Doe",
+    "licenseNumber": "DL12345678",
+    "dateOfBirth": "1990-05-15",
+    "issueDate": "2020-01-01",
+    "expiryDate": "2025-01-01",
+    "address": "123 Main Street, Springfield, USA",
+    "class": "B",
+    "restrictions": "None",
+    "endorsements": "None",
+    "issuingAuthority": "Springfield DMV"
+  }
+}
