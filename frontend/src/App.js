@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Typography, Button, Container, Box } from '@mui/materi
 import IssueVC from './components/key-did/IssueVC';
 import ViewVC from './components/key-did/ViewVC';
 import VerifyVC from './components/key-did/VerifyVC';
+import ScanAndVerify from './components/key-did/ScanAndVerify';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Button color="inherit" component={Link} to="/issue-vc">Issue VC</Button>
           <Button color="inherit" component={Link} to="/view-vc">View VCs</Button>
           <Button color="inherit" component={Link} to="/verify-vc">Verify VC</Button>
+          {/* <Button color="inherit" component={Link} to="/scan-vc">Scan and verify VC</Button> */}
         </Toolbar>
       </AppBar>
       <Container>
@@ -24,6 +26,7 @@ const App = () => {
             <Route path="/issue-vc" element={<IssueVC />} />
             <Route path="/view-vc" element={<ViewVC />} />
             <Route path="/verify-vc" element={<VerifyVC />} />
+            {/* <Route path="/scan-vc" element={<ScanAndVerify />} /> */}
             <Route path="/" element={<Home />} />
           </Routes>
         </Box>

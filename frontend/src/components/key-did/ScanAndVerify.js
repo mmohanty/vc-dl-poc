@@ -1,46 +1,59 @@
-// import React, { useState } from 'react';
-// import QrReader from 'react-qr-reader';
+// import React, { useEffect, useRef, useState } from 'react';
+// import { Html5Qrcode } from 'html5-qrcode';
 // import axios from 'axios';
 
 // const ScanAndVerify = () => {
 //   const [scanResult, setScanResult] = useState('');
 //   const [verificationResult, setVerificationResult] = useState('');
+//   const qrCodeRef = useRef(null);
 
-//   const handleScan = async (data) => {
-//     if (data) {
-//       setScanResult(data);
+//   useEffect(() => {
+//     const html5QrCode = new Html5Qrcode(qrCodeRef.current.id);
 
-//       try {
-//         // Parse the scanned data if necessary (assuming it's a JSON string)
-//         const vcData = JSON.parse(data);
+//     html5QrCode.start(
+//       { facingMode: 'environment' }, // Use rear camera
+//       {
+//         fps: 10, // Frames per second for the scan
+//         qrbox: { width: 250, height: 250 }, // Size of the scanning box
+//       },
+//       async (decodedText) => {
+//         setScanResult(decodedText);
 
-//         // Call the verify endpoint with the VC data
-//         const response = await axios.post('http://localhost:3000/verify-vc', {
-//           vc: vcData,
-//         });
+//         try {
+//           // Parse the scanned data if necessary (assuming it's a JSON string)
+//           const vcData = JSON.parse(decodedText);
 
-//         // Display the verification result
-//         setVerificationResult(response.data);
-//       } catch (error) {
-//         setVerificationResult(`Verification failed: ${error.message}`);
+//           // Call the verify endpoint with the VC data
+//           const response = await axios.post('http://localhost:4000/verify-vc', {
+//             vc: vcData,
+//           });
+
+//           // Display the verification result
+//           setVerificationResult(JSON.stringify(response.data, null, 2));
+//         } catch (error) {
+//           setVerificationResult(`Verification failed: ${error.message}`);
+//         }
+
+//         // Stop scanning after a successful scan
+//         html5QrCode.stop().catch((err) => console.error('Stop error:', err));
+//       },
+//       (errorMessage) => {
+//         console.warn('Scanning error:', errorMessage);
 //       }
-//     }
-//   };
+//     ).catch((err) => {
+//       console.error('Failed to start QR code scanner:', err);
+//     });
 
-//   const handleError = (error) => {
-//     console.error('QR Scan Error:', error);
-//     setVerificationResult(`Error scanning QR: ${error.message}`);
-//   };
+//     // Cleanup when the component unmounts
+//     return () => {
+//       html5QrCode.stop().catch((err) => console.error('Cleanup stop error:', err));
+//     };
+//   }, []);
 
 //   return (
 //     <div>
 //       <h2>Scan and Verify VC</h2>
-//       <QrReader
-//         delay={300}
-//         onError={handleError}
-//         onScan={handleScan}
-//         style={{ width: '100%' }}
-//       />
+//       <div id="reader" ref={qrCodeRef} style={{ width: '300px', height: '300px' }}></div>
 //       <h3>Scan Result:</h3>
 //       <pre>{scanResult}</pre>
 //       <h3>Verification Result:</h3>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, Typography, Paper } from "@mui/material";
+import { Box, Typography, Paper, Grid } from "@mui/material";
+import { QRCodeCanvas } from "qrcode.react"; // Use QRCodeCanvas instead
 
 const ViewVC = () => {
   const [vcList, setVcList] = useState([]);
@@ -46,10 +47,21 @@ const ViewVC = () => {
               overflowWrap: "break-word",
             }}
           >
-            <Typography variant="subtitle1">VC ID: {vc.id}</Typography>
-            <pre style={{ whiteSpace: "pre-wrap" }}>
-              {JSON.stringify(vc, null, 2)}
-            </pre>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={8}>
+                <Typography variant="subtitle1">VC ID: {vc.id}</Typography>
+                <pre style={{ whiteSpace: "pre-wrap" }}>
+                  {JSON.stringify(vc, null, 2)}
+                </pre>
+              </Grid>
+              <Grid item xs={4}>
+                <QRCodeCanvas
+                  value={JSON.stringify(vc)}
+                  size={128}
+                  level={"M"}
+                />
+              </Grid>
+            </Grid>
           </Paper>
         ))
       ) : (
